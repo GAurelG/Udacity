@@ -1,4 +1,4 @@
-# Udacity_Portfolio
+# Udacity_Data_analyst_Portfolio
 
 Codes or documents created during the *Udacity data analyst* nanodegree projects
 

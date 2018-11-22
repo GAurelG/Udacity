@@ -1,0 +1,7 @@
+This is an extract from the introduction of the report.
+
+During this project I have used the [paris][1] of OpenStreetMap in XML format. The goal of that project was to clean the informations from that XML file, feed the corrected data into an SQL database and then make interresting requests.
+
+The Paris area interest me a lot because it is the place were i grew up and live. The interest of this area also comes from it size and density of population. The extract used during this project was downloaded the 4th november. I precise the date as it seems that the extracted zone as changed a bit for the mapzen extract since that time. The file size of the extracted XML dataset is 4.5GB.
+
+[1]: https://mapzen.com/data/metro-extracts/metro/paris_france/extract

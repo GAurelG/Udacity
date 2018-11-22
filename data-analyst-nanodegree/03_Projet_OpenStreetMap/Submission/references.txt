@@ -1,0 +1,24 @@
+# Street name related links:
+
+https://fr.wikipedia.org/wiki/Trait_d'union#Noms_de_voies_et_d.E2.80.99organismes
+https://en.wikipedia.org/wiki/Apostrophe#Entering_apostrophe
+https://fr.wikipedia.org/wiki/Liste_des_indicatifs_téléphoniques_en_France
+
+# Sqlite reated links:
+
+http://www.quackit.com/sqlite/tutorial/import_data_from_csv_file.cfm
+
+# Paris transportation policy:
+
+http://www.bbc.com/news/magazine-36169815
+https://maps.google.com
+http://www.stif.org/IMG/pdf/reseau-transports-ile-de-france-.pdf
+http://www.apur.org/etude/insertion-urbaine-paysagere-autoroutes-grand-paris
+
+# Inspirating Query:
+
+https://gist.github.com/carlward/54ec1c91b62a5f911c42#file-sample_project-md
+
+# openStreetMap wiki and website:
+
+http://wiki.openstreetmap.org/wiki/Main_Page

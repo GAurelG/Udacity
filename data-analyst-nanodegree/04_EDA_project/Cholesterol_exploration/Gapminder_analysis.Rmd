@@ -1,0 +1,126 @@
+# Cholesterol Fat in men and women blood
+
+Exploration of the dataset Cholesterol fat blood in men and women:
+This post is my contribution for the P4, problem-set explore one variable, gapminder data
+
+I know this is a bit different from only exploring one variable, but I found that dataset interesting and wanted to share my explorations.
+
+I explored the Cholesterol data for men and women from the gapminder datasets, 
+they can be found on the [gapminder](http://www.gapminder.org/data/) website. 
+I decided to merge the two data-sets (men and women) because it seems to make 
+sense to look at these data-sets together.
+First lets load the data we need from the gapminder data-sets:
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(gridExtra)
+
+men_fat = read.csv2('Indicator_TC male ASM.csv')
+women_fat = read.csv2('Indicator_TC female ASM.csv')
+str(men_fat)
+```
+
+As we can see for the men data-set the column name is a year (with some formatting problem). The country name is considered a factor but as a strange column name.
+The women dataset is made the same way. To assemble the two data-sets I decided to clean the years names, to tidy the data-sets in 3 columns: Country, year, value.
+Then I bind the two dataframes:
+```{R tidying the dataframes}
+colnames(men_fat) <- c('Country', seq(1980, 2008, 1))
+tidy_men <- gather(men_fat, year, value, -Country)
+tidy_men$year <- as.numeric(tidy_men$year)
+tidy_men$sex <- factor("men")
+
+colnames(women_fat) <- c('Country', seq(1980, 2008, 1))
+tidy_women <- gather(women_fat, year, value, -Country)
+tidy_women$sex = factor("women")
+tidy_women$year <- as.numeric(tidy_women$year)
+
+tidy = rbind(tidy_men, tidy_women)
+tidy <- tidy[order(tidy$year),]
+head(tidy)
+```
+
+now that we have a tidy dataset, we can make some statistics:
+
+```{R Statistics}
+by(tidy$value, tidy$year, summary)
+#I didn't include the statistic in that document decause of the boxplot below that would give us the informations in a clearer way.
+```
+then we create a boxplot for each year by gender:
+```{R}
+ggplot(aes(x = year, y = value, group=year), data = tidy)+
+  geom_boxplot()+
+  facet_wrap(~sex)+
+  labs(title = "Evolution of blood Level cholesterol")
+ggsave('test.pdf')
+```
+
+We see that the blood Cholesterol level is quite dispersed for male and female in the world.
+In general, women tends to have a higher cholesterol level than men.
+Lets see if we can find Country with a higher blood cholesterol level for men higher than women at some point during the period looked:
+
+```{R}
+sp <- spread(tidy, sex, value)
+head(tidy)
+head(sp)
+men_o_wo <- subset(sp$Country, sp$women < sp$men)
+length(unique(men_o_wo))
+length(unique(sp$Country))
+```
+
+We have here the list of Country that showed at some point a higher cholesterol blood level for men than women. We can see that Country from different Continent have shown that pattern.
+It represent ~24.6% of the country studied (49/199). So the majority of Countries always showed higher Cholesterol level for women than men. Looking at the evolution of the median of Cholesterol blood level over the years, we can see a decrease over the period looked.
+```{R}
+ggplot(aes(x = year, y = value), data = tidy)+
+  stat_summary(fun.y = median, aes(color=sex), geom='point')+
+  labs(title = "Evolution of Cholesterol Blood level difference between gender")
+```
+I then wanted to look at some Country.
+France:
+```{R}
+ggplot(aes(x = year, y = value), data = subset(tidy, tidy$Country=='France'))+
+  geom_point(aes(colour=sex))+
+  coord_cartesian(ylim = c(4.1, 6))+
+  labs(title = "Evolution of Cholesterol Blood level in France")
+```
+
+US:
+```{R}
+ggplot(aes(x = year, y = value), data = subset(tidy, tidy$Country=='United States'))+
+  geom_point(aes(colour=sex))+
+  coord_cartesian(ylim = c(4.1, 6))+
+  labs(title = "Evolution of Cholesterol Blood level in the US.")
+```
+
+China:
+```{R}
+ggplot(aes(x = year, y = value), data = subset(tidy, tidy$Country=='China'))+
+  geom_point(aes(colour=sex))+
+  coord_cartesian(ylim = c(4.1, 6))+
+  labs(title = "Evolution of Cholesterol Blood level in china")
+```
+
+India:
+```{R}
+ggplot(aes(x = year, y = value), data = subset(tidy, tidy$Country=='India'))+
+  geom_point(aes(colour=sex))+
+  coord_cartesian(ylim = c(4.1, 6))+
+  labs(title = "Evolution of Cholesterol Blood level in India")
+```
+
+Japan:
+```{R}
+ggplot(aes(x = year, y = value), data = subset(tidy, tidy$Country=='Japan'))+
+  geom_point(aes(colour=sex))+
+  coord_cartesian(ylim = c(4.1, 6))+
+  labs(title = "Evolution of Cholesterol Blood level in Japan")
+```
+
+What is interesting is to note that different countries have different evolution.
+Usually men and women blood cholesterol level seems to follow the same trend in one Country. While some Countries show women blood level always higher than men blood level (for instance the US), There are also Countries that show men blood level higher than women (France) or a change in the relation between men and women cholesterol blood level (India).
+An interesting fact is to see that different evolution are seen, France and the US show a decrease in the cholesterol blood level, they started with a high concentration, Japan showed an increase and stabilization in the mid 1990's, China had a low level and it increased in the last years of the dataset. India had a low level and it is starting to decrease.
+
+It is really interesting to see these differences in evolution, and in concentrations. We have to keep in mind that this dataset range from 1980 to 2008. An updated version of that dataset could show more interesting development. Also the data represent the "mean cholesterol blood level", using the mean can be misleading and alter the representation of the situation in each country, it could be interesting to compare these data to the median in each country.
+
+I would be really happy to hear feedback on that analysis.
+

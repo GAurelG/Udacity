@@ -1,0 +1,51 @@
+
+
+```{R}
+#install.packages("lubridate")
+library(lubridate)
+birthdays <- read.csv('Facebook birthdays import.csv') 
+birthdays$Date <- mdy(birthdays$Date)#, format = "%m/%d/%y")
+#month(birthdays$Date)
+me <- ymd("1990-12-30")
+
+# find number of person with same birthday month and day. remove 1 because I am counted
+number <- subset(birthdays, month(birthdays$Date)==month(me) & day(birthdays$Date)==day(me))
+length(number$Subject)
+number$Subject
+
+# find number of event in each month
+birthdays$month <- month(birthdays$Date)
+birthdays$day <- day(birthdays$Date)
+birthdays$month
+by(birthdays$Subject, birthdays$month, length)
+
+# day of the year with the most birthday?
+
+```
+
+```{R}
+
+# test with the standard date formating:
+# use as.Date(); strftime() to select only some times
+g1 <- as.Date("18-03")
+g <- as.Date("03/18/17", format="%m/%d/%y")
+g2 <- strftime(g, "%m/%d")
+g2
+gn <- "Gwenael Héraud"
+birthdays <- read.csv('Facebook birthdays import.csv') 
+head(birthdays)
+str(birthdays)
+test1 <-birthdays$Date
+test2 <- as.Date(test1, "%m/%d/%y")
+test2
+test2 <- strftime(test2, "%m/%d")
+?strftime
+test2 == g2
+birthdays$Date <- as.Date(birthdays$Date, format = "%m/%d/%y")
+tester <- birthdays[birthdays$Date==g,]
+head(tester$Subject)
+
+
+t <- as.Date("2017/12/30")
+me_md == strftime(t, "%m-%d")
+```

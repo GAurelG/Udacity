@@ -1,0 +1,13 @@
+# Plotting references
+https://matplotlib.org/users/pyplot_tutorial.html
+http://scikit-learn.org/stable/auto_examples/plot_feature_stacker.html#sphx-glr-auto-examples-plot-feature-stacker-py
+
+# Python, library documentation documentation:
+http://scikit-learn.org/
+https://github.com/scikit-learn/
+https://wiki.python.org/
+
+# General References for random questions:
+https://stackoverflow.com/
+
+
